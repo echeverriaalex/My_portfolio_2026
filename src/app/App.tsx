@@ -1,0 +1,716 @@
+import { useState, useEffect, useRef } from "react";
+import { Github, Linkedin, Mail, ExternalLink, ArrowUpRight, ChevronRight, Cpu, Globe, Shield, Zap, Database, Code2 } from "lucide-react";
+import { HudCorners } from "./components/HudCorners/HudCorners";
+import { ProjectCard } from "./components/ProjectCard/ProjectCard";
+import { EXO, MONO, ORBITRON, PROJECTS } from "../Constants";
+import { PulsingDot } from "./components/PulsingDot/PulsingDot";
+import { SectionLabel } from "./components/SectionLabel/SectionLabel";
+import { GridBg } from "./components/GridBg/GridBg";
+import { GlowOrb } from "./components/GlowOrb/GlowOrb";
+import { Ticker } from "./components/Ticker/Ticker";
+
+/* ─── Data ─────────────────────────────────────────── */
+
+const ABOUT_MY = {
+  item: {
+    long: "Alex Echeverria",
+    short: "A. Echeverria",
+    name: "Alex",
+    surname: "Echeverria",
+    role: "Fullstack Developer",
+  },
+} as const;
+
+const STACK = [
+  {
+    icon: Code2,
+    category: "Frontend",
+    items: [
+      "React",
+      "Angular",
+      "Next.js",
+      "Tailwind CSS",
+      "TypeScript",
+    ],
+  },
+  {
+    icon: Database,
+    category: "Backend",
+    items: ["Node.js", "PostgreSQL", "MySQL", "MongoDB", "Mongoose"],
+  },
+  {
+    icon: Globe,
+    category: "Cloud Platforms",
+    items: [
+      "Vercel",
+      "Render",
+      "GitHub",
+      "MongoDB Atlas",
+    ],
+  },
+  {
+    icon: Shield,
+    category: "Security",
+    items: [
+      "OAuth 2.0",
+      "JWT",
+      "Bcrypt",
+    ],
+  },
+];
+
+const EXPERIENCE = [
+  {
+    company: "Meridian Systems",
+    role: "Fullstack Developer",
+    period: "2022 — NOW",
+    level: "L5",
+    active: true,
+  },
+  {
+    company: "Cloudloop",
+    role: "Fullstack Developer",
+    period: "2020 — 2022",
+    level: "L4",
+    active: false,
+  },
+  {
+    company: "Byte Lab (YC S19)",
+    role: "Software Developer",
+    period: "2019 — 2020",
+    level: "L3",
+    active: false,
+  },
+];
+
+const STATS = [
+  { label: "Years Active", value: "6+" },
+  { label: "Projects", value: "34" },
+  { label: "GitHub Stars", value: "5k+" },
+  { label: "Contributions", value: "2.1k" },
+];
+
+/* ─── Primitives ──────────────────────────────────── */
+
+/** Bracket corners used on HUD cards */
+
+
+
+
+
+
+/** Animated grid background */
+
+
+
+
+
+
+
+
+
+/* ─── Main ────────────────────────────────────────── */
+export default function App() {
+  const [time, setTime] = useState(new Date());
+  const [bootSeq, setBootSeq] = useState(0);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(
+      () => setBootSeq((v) => (v < 100 ? v + 2 : 100)),
+      40,
+    );
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <div
+      className="min-h-screen bg-background text-foreground relative overflow-x-hidden"
+      style={EXO}
+    >
+      <GridBg />
+
+      {/* Subtle scanline */}
+      <div
+        className="pointer-events-none fixed left-0 right-0 z-0 h-32 opacity-[0.03]"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, rgba(0,212,255,0.4), transparent)",
+          animation: "scanline 8s linear infinite",
+        }}
+      />
+
+      <Ticker />
+
+      {/* ── Nav ── */}
+      <nav
+        ref={navRef}
+        className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl"
+      >
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-8">
+          {/* Logo */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div
+              className="relative w-8 h-8 flex items-center justify-center border border-primary/40"
+              style={{
+                boxShadow: "0 0 12px rgba(0,212,255,0.2)",
+              }}
+            >
+              <Cpu size={16} className="text-primary" />
+            </div>
+            <div>
+              <div
+                className="text-sm font-bold tracking-widest uppercase leading-none hud-text"
+                style={{ ...ORBITRON, color: "#00d4ff" }}
+              >
+                { ABOUT_MY.item.short.toUpperCase() }
+              </div>
+              <div
+                className="text-[10px] text-muted-foreground tracking-widest mt-0.5"
+                style={MONO}
+              >
+                DEV · SYSTEM
+              </div>
+            </div>
+          </div>
+
+          {/* Links */}
+          <ul className="hidden md:flex items-center gap-7">
+            {["Profile", "Stack", "Projects", "Contact"].map(
+              (link) => (
+                <li key={link}>
+                  <a
+                    href={`#${link.toLowerCase()}`}
+                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group"
+                    style={MONO}
+                  >
+                    {link}
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all group-hover:w-full" />
+                  </a>
+                </li>
+              ),
+            )}
+          </ul>
+
+          {/* Right side: clock + boot indicator */}
+          <div className="flex items-center gap-4 flex-shrink-0">
+            <div className="hidden sm:flex items-center gap-2">
+              <PulsingDot />
+              <span
+                className="text-xs text-primary tabular-nums"
+                style={MONO}
+              >
+                {time.toLocaleTimeString("en-GB")}
+              </span>
+            </div>
+            <div className="hidden md:flex items-center gap-1.5 border border-border px-2.5 py-1">
+              <span
+                className="text-[10px] text-muted-foreground"
+                style={MONO}
+              >
+                SYS
+              </span>
+              <div className="w-16 h-1 bg-secondary overflow-hidden">
+                <div
+                  className="h-full bg-primary transition-all duration-75"
+                  style={{ width: `${bootSeq}%` }}
+                />
+              </div>
+              <span
+                className="text-[10px] text-primary"
+                style={MONO}
+              >
+                {bootSeq}%
+              </span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── Hero ── */}
+      <section
+        id="profile"
+        className="relative max-w-6xl mx-auto px-6 pt-20 pb-28 overflow-hidden"
+      >
+        <GlowOrb x="10%" y="40%" color="#00d4ff" size={500} />
+        <GlowOrb x="85%" y="20%" color="#7b61ff" size={400} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-16 items-start relative z-10">
+          <div className="animate-fade-in-up">
+            {/* Status bar */}
+            <div className="inline-flex items-center gap-3 border border-primary/30 bg-primary/5 px-4 py-2 mb-8 animated-border transition-all">
+              <PulsingDot />
+              <span
+                className="text-xs text-primary tracking-widest"
+                style={MONO}
+              >
+                NEURAL LINK ESTABLISHED · BERLIN NODE · OPEN TO
+                OPPORTUNITIES
+              </span>
+            </div>
+
+            {/* Name */}
+            <h1
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight uppercase mb-2 animate-pulse-glow"
+              style={ORBITRON}
+            >
+              <span className="block text-foreground animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                { ABOUT_MY.item.name.toUpperCase() }
+              </span>
+              <span
+                className="block animate-fade-in-up"
+                style={{
+                  color: "#00d4ff",
+                  textShadow:
+                    "0 0 30px rgba(0,212,255,0.5), 0 0 60px rgba(0,212,255,0.2)",
+                  animationDelay: '0.4s'
+                }}
+              >
+                { ABOUT_MY.item.surname.toUpperCase() }
+              </span>
+            </h1>
+
+            {/* Role */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px w-8 bg-primary/50" />
+              <span
+                className="text-sm tracking-[0.3em] uppercase text-secondary-foreground"
+                style={MONO}
+              >
+                { ABOUT_MY.item.role }
+              </span>
+            </div>
+
+            <p
+              className="text-base text-secondary-foreground leading-relaxed max-w-xl mb-8"
+              style={EXO}
+            >
+              Six years engineering products from bare metal to
+              browser. I specialize in distributed systems and
+              the interfaces that make them disappear. Every
+              decision is a performance decision.
+            </p>
+
+            {/* CTA */}
+            <div className="flex items-center gap-4 flex-wrap animate-fade-in-up" style={{ animationDelay: '0.6s', opacity: 0 }}>
+              <a
+                href="#projects"
+                className="glow-btn inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs tracking-widest uppercase font-semibold transition-all hover:scale-105"
+                style={ORBITRON}
+              >
+                View Systems <ArrowUpRight size={13} />
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 border border-primary/40 text-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/10 transition-all hover:scale-105 hover:border-primary/70"
+                style={ORBITRON}
+              >
+                Open Channel
+              </a>
+              <a
+                href="https://github.com/echeverriaalex"
+                target="_blank"
+                rel="noreferrer"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              >
+                <Github size={15} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/alexnahuelecheverria/"
+                target="_blank"
+                rel="noreferrer"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              >
+                <Linkedin size={15} />
+              </a>
+            </div>
+          </div>
+
+          {/* Stats panel */}
+          <div className="relative border border-border bg-card/80 p-6 glow-border hidden lg:block animate-fade-in-down card-hover" style={{ animationDelay: '0.4s' }}>
+            <HudCorners size={14} />
+
+            <div className="flex items-center justify-between mb-6">
+              <span
+                className="text-xs text-primary tracking-widest"
+                style={MONO}
+              >
+                OPERATOR STATS
+              </span>
+              <PulsingDot />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {STATS.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="border border-border p-3 relative"
+                >
+                  <div
+                    className="text-3xl font-black leading-none mb-1"
+                    style={{
+                      ...ORBITRON,
+                      color: "#00d4ff",
+                      textShadow:
+                        "0 0 15px rgba(0,212,255,0.4)",
+                    }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div
+                    className="text-xs text-muted-foreground tracking-widest uppercase"
+                    style={MONO}
+                  >
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2">
+              {[
+                { label: "React", pct: 95, color: "#00d4ff" },
+                { label: "Go", pct: 82, color: "#7b61ff" },
+                {
+                  label: "Kubernetes",
+                  pct: 74,
+                  color: "#00ffa3",
+                },
+              ].map((bar) => (
+                <div key={bar.label}>
+                  <div
+                    className="flex justify-between text-[11px] mb-1"
+                    style={MONO}
+                  >
+                    <span className="text-secondary-foreground">
+                      {bar.label}
+                    </span>
+                    <span style={{ color: bar.color }}>
+                      {bar.pct}%
+                    </span>
+                  </div>
+                  <div className="h-1 bg-secondary overflow-hidden">
+                    <div
+                      className="h-full transition-all duration-1000"
+                      style={{
+                        width: `${bar.pct}%`,
+                        backgroundColor: bar.color,
+                        boxShadow: `0 0 6px ${bar.color}80`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-border">
+              <div
+                className="text-[11px] text-muted-foreground"
+                style={MONO}
+              >
+                LAST COMMIT —{" "}
+                <span className="text-primary">2h ago</span> ·
+                main · feat/auth-v3
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Profile / About ── */}
+      <section
+        id="profile-detail"
+        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
+      >
+        <SectionLabel>Operator Profile</SectionLabel>
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16">
+          <div
+            className="space-y-5 text-secondary-foreground text-base leading-relaxed"
+            style={EXO}
+          >
+            <p>
+              I started programming at 14 writing PHP for small
+              local businesses. Today I build distributed
+              systems that handle millions of events per day and
+              the interfaces that make those systems
+              comprehensible to humans. Most of my career has
+              been in early-stage startups where engineering and
+              product thinking are inseparable.
+            </p>
+            <p>
+              My focus is on the boundary between infrastructure
+              and experience — where architecture decisions
+              directly shape what a user feels. I think the best
+              software is invisible: it does exactly what you
+              need before you know you need it.
+            </p>
+            <p>
+              Outside the terminal: long-distance cycling,
+              mechanical keyboards, and distributed systems
+              papers I read on weekends. Currently based in
+              Berlin, working remotely.
+            </p>
+          </div>
+          <div>
+            <div
+              className="text-xs text-primary tracking-widest mb-5 flex items-center gap-2"
+              style={MONO}
+            >
+              <Zap size={11} />
+              EMPLOYMENT LOG
+            </div>
+            <div className="space-y-4">
+              {EXPERIENCE.map((exp) => (
+                <div
+                  key={exp.company}
+                  className="relative pl-5 border-l-2"
+                  style={{
+                    borderColor: exp.active
+                      ? "#00d4ff"
+                      : "#071e36",
+                  }}
+                >
+                  {exp.active && (
+                    <span
+                      className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-primary"
+                      style={{ boxShadow: "0 0 8px #00d4ff" }}
+                    />
+                  )}
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <p
+                      className="text-foreground text-sm font-semibold uppercase tracking-wide"
+                      style={ORBITRON}
+                    >
+                      {exp.company}
+                    </p>
+                    <span
+                      className="text-[10px] border border-border px-1.5 py-0.5 text-muted-foreground"
+                      style={MONO}
+                    >
+                      {exp.level}
+                    </span>
+                  </div>
+                  <p className="text-secondary-foreground text-sm">
+                    {exp.role}
+                  </p>
+                  <p
+                    className="text-muted-foreground text-xs mt-0.5"
+                    style={MONO}
+                  >
+                    {exp.period}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Stack ── */}
+      <section
+        id="stack"
+        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
+      >
+        <SectionLabel>Technical Stack</SectionLabel>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {STACK.map((group, idx) => {
+            const Icon = group.icon;
+            return (
+              <div
+                key={group.category}
+                className="relative border border-border bg-card p-5 group hover:border-primary/40 transition-all card-hover animate-scale-in"
+                style={{ animationDelay: `${idx * 0.1}s` }}
+              >
+                <HudCorners size={8} />
+                <div className="flex items-center gap-2 mb-4">
+                  <Icon size={14} className="text-primary" />
+                  <span
+                    className="text-xs text-primary tracking-widest uppercase font-semibold"
+                    style={ORBITRON}
+                  >
+                    {group.category}
+                  </span>
+                </div>
+                <ul className="space-y-2.5">
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 text-sm text-secondary-foreground"
+                      style={EXO}
+                    >
+                      <ChevronRight
+                        size={10}
+                        className="text-primary/60 flex-shrink-0"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── Projects ── */}
+      <section
+        id="projects"
+        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
+      >
+        <SectionLabel>Active Systems</SectionLabel>
+        <div className="space-y-3">
+          {PROJECTS.map((project, idx) => (
+            <div key={project.id} className="animate-fade-in-up card-hover" style={{ animationDelay: `${idx * 0.15}s`, opacity: 0 }}>
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Contact ── */}
+      <section
+        id="contact"
+        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
+      >
+        <SectionLabel>Open Channel</SectionLabel>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+          <div className="animate-fade-in-left">
+            <h2
+              className="text-4xl md:text-5xl font-black leading-none uppercase mb-4"
+              style={{
+                ...ORBITRON,
+                textShadow: "0 0 20px rgba(0,212,255,0.3)",
+              }}
+            >
+              <span className="text-foreground">Initiate</span>
+              <br />
+              <span className="text-primary">Connection.</span>
+            </h2>
+            <p
+              className="text-secondary-foreground leading-relaxed text-base mb-6"
+              style={EXO}
+            >
+              Available for senior and staff-level fullstack
+              roles, fractional CTO engagements, and select open
+              source collaborations. Encrypted channel. Response
+              guaranteed within 24 hours.
+            </p>
+            <div className="border border-primary/20 bg-primary/5 px-4 py-3 flex items-center gap-3">
+              <PulsingDot />
+              <span
+                className="text-xs text-primary tracking-widest"
+                style={MONO}
+              >
+                TRANSMISSION CHANNEL OPEN · ENCRYPTED · &lt;24H
+                RESPONSE
+              </span>
+            </div>
+          </div>
+          <div className="space-y-3 animate-fade-in-right">
+            {[
+              {
+                icon: Mail,
+                label: "alexnahuelecheverria@gmail.com",
+                sub: "Primary",
+                href: "mailto:alexnahuelecheverria@gmail.com",
+                color: "#00d4ff",
+              },
+              {
+                icon: Github,
+                label: "github.com/echeverriaalex",
+                sub: "Code Repos",
+                href: "https://github.com/echeverriaalex",
+                color: "#7b61ff",
+              },
+              {
+                icon: Linkedin,
+                label: "in/alexnahuelecheverria",
+                sub: "Professional",
+                href: "https://www.linkedin.com/in/alexnahuelecheverria/",
+                color: "#00ffa3",
+              },
+            ].map(({ icon: Icon, label, sub, href, color }, idx) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center gap-4 p-4 border border-border bg-card hover:bg-card/80 transition-all card-hover animated-border"
+                style={{ borderColor: "rgba(0,212,255,0.15)", animationDelay: `${idx * 0.1}s` }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.borderColor =
+                    color + "55")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.borderColor =
+                    "rgba(0,212,255,0.15)")
+                }
+              >
+                <div
+                  className="w-9 h-9 border flex items-center justify-center flex-shrink-0 transition-colors"
+                  style={{
+                    borderColor: color + "40",
+                    backgroundColor: color + "0d",
+                  }}
+                >
+                  <Icon size={15} style={{ color }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className="text-foreground text-sm font-medium truncate"
+                    style={MONO}
+                  >
+                    {label}
+                  </p>
+                  <p
+                    className="text-muted-foreground text-xs tracking-widest mt-0.5"
+                    style={MONO}
+                  >
+                    {sub}
+                  </p>
+                </div>
+                <ArrowUpRight
+                  size={13}
+                  className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="border-t border-border animated-border">
+        <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-3 min-h-40 animate-fade-in-up" style={{ animationDelay: '0.3s', opacity: 0 }} >
+          <div className="flex items-center gap-3">
+            <Cpu size={13} className="text-primary" />
+            <span
+              className="text-xs text-muted-foreground tracking-widest uppercase"
+              style={MONO}
+            >
+              { ABOUT_MY.item.long } · { ABOUT_MY.item.role } · MAR DEL PLATA-0223 · { new Date().getFullYear() }
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <PulsingDot />
+            <span className="text-xs text-primary" style={MONO}>
+              ALL SYSTEMS NOMINAL
+            </span>
+          </div>
+        </div>
+        <div
+          className="h-0.5 w-full"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, #00d4ff, #7b61ff, transparent)",
+          }}
+        />
+      </footer>
+    </div>
+  );
+}
