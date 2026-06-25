@@ -8,6 +8,7 @@ import { SectionLabel } from "./components/SectionLabel/SectionLabel";
 import { GridBg } from "./components/GridBg/GridBg";
 import { GlowOrb } from "./components/GlowOrb/GlowOrb";
 import { Ticker } from "./components/Ticker/Ticker";
+import { StatCard } from "./components/StatCard/StatCard";
 
 /* ─── Data ─────────────────────────────────────────── */
 
@@ -17,7 +18,7 @@ const ABOUT_MY = {
     short: "A. Echeverria",
     name: "Alex",
     surname: "Echeverria",
-    role: "Fullstack Developer",
+    role: "Desarrollador Fullstack",
   },
 } as const;
 
@@ -84,8 +85,8 @@ const EXPERIENCE = [
 ];
 
 const STATS = [
-  { label: "Years Active", value: "6+" },
-  { label: "Projects", value: "34" },
+  { label: "Años Explorando", value: "9+" },
+  { label: "Proyectos", value: "Varios" },
   { label: "GitHub Stars", value: "5k+" },
   { label: "Contributions", value: "2.1k" },
 ];
@@ -181,7 +182,7 @@ export default function App() {
 
           {/* Links */}
           <ul className="hidden md:flex items-center gap-7">
-            {["Profile", "Stack", "Projects", "Contact"].map(
+            {["Perfil", "Stack", "Proyectos", "Contacto"].map(
               (link) => (
                 <li key={link}>
                   <a
@@ -249,8 +250,7 @@ export default function App() {
                 className="text-xs text-primary tracking-widest"
                 style={MONO}
               >
-                NEURAL LINK ESTABLISHED · BERLIN NODE · OPEN TO
-                OPPORTUNITIES
+                NEURAL LINK ESTABLISHED · BERLIN NODE · DISPONIBLE A OPORTUNIDADES
               </span>
             </div>
 
@@ -303,14 +303,14 @@ export default function App() {
                 className="glow-btn inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs tracking-widest uppercase font-semibold transition-all hover:scale-105"
                 style={ORBITRON}
               >
-                View Systems <ArrowUpRight size={13} />
+                Ver Sistemas <ArrowUpRight size={13} />
               </a>
               <a
                 href="#contact"
                 className="inline-flex items-center gap-2 border border-primary/40 text-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/10 transition-all hover:scale-105 hover:border-primary/70"
                 style={ORBITRON}
               >
-                Open Channel
+                Canal Abierto
               </a>
               <a
                 href="https://github.com/echeverriaalex"
@@ -340,47 +340,24 @@ export default function App() {
                 className="text-xs text-primary tracking-widest"
                 style={MONO}
               >
-                OPERATOR STATS
+                FAVORITES STATISTICS
               </span>
               <PulsingDot />
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
               {STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="border border-border p-3 relative"
-                >
-                  <div
-                    className="text-3xl font-black leading-none mb-1"
-                    style={{
-                      ...ORBITRON,
-                      color: "#00d4ff",
-                      textShadow:
-                        "0 0 15px rgba(0,212,255,0.4)",
-                    }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    className="text-xs text-muted-foreground tracking-widest uppercase"
-                    style={MONO}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
+                <StatCard stat={stat} key={stat.label} />
               ))}
             </div>
 
             <div className="space-y-2">
               {[
                 { label: "React", pct: 95, color: "#00d4ff" },
-                { label: "Go", pct: 82, color: "#7b61ff" },
-                {
-                  label: "Kubernetes",
-                  pct: 74,
-                  color: "#00ffa3",
-                },
+                { label: "Angular", pct: 83, color: "#ff4800" },
+                { label: "TypeScript", pct: 70, color: "#0077ff" },
+                { label: "Node.js", pct: 85, color: "#fff461" },
+                { label: "MongoDB", pct: 83, color: "#10c528" },
               ].map((bar) => (
                 <div key={bar.label}>
                   <div
@@ -414,7 +391,7 @@ export default function App() {
                 style={MONO}
               >
                 LAST COMMIT —{" "}
-                <span className="text-primary">2h ago</span> ·
+                <span className="text-primary">9h ago</span> ·
                 main · feat/auth-v3
               </div>
             </div>
@@ -516,7 +493,7 @@ export default function App() {
         id="stack"
         className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
       >
-        <SectionLabel>Technical Stack</SectionLabel>
+        <SectionLabel>Stack Técnico</SectionLabel>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {STACK.map((group, idx) => {
             const Icon = group.icon;
@@ -577,7 +554,7 @@ export default function App() {
         id="contact"
         className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
       >
-        <SectionLabel>Open Channel</SectionLabel>
+        <SectionLabel>Canal Abierto</SectionLabel>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           <div className="animate-fade-in-left">
             <h2
@@ -587,18 +564,15 @@ export default function App() {
                 textShadow: "0 0 20px rgba(0,212,255,0.3)",
               }}
             >
-              <span className="text-foreground">Initiate</span>
+              <span className="text-foreground">INICIAR</span>
               <br />
-              <span className="text-primary">Connection.</span>
+              <span className="text-primary">CONEXIÓN.</span>
             </h2>
             <p
               className="text-secondary-foreground leading-relaxed text-base mb-6"
               style={EXO}
             >
-              Available for senior and staff-level fullstack
-              roles, fractional CTO engagements, and select open
-              source collaborations. Encrypted channel. Response
-              guaranteed within 24 hours.
+              Disponible para roles de desarrollador fullstack y de personal, compromisos de CTO fraccionados, y colaboraciones seleccionadas en código abierto. Canal encriptado. Respuesta garantizada dentro de 24 horas.
             </p>
             <div className="border border-primary/20 bg-primary/5 px-4 py-3 flex items-center gap-3">
               <PulsingDot />
@@ -606,8 +580,7 @@ export default function App() {
                 className="text-xs text-primary tracking-widest"
                 style={MONO}
               >
-                TRANSMISSION CHANNEL OPEN · ENCRYPTED · &lt;24H
-                RESPONSE
+                CANAL DE TRANSMISIÓN ABIERTO · ENCRIPTADO · &lt;24H RESPUESTA
               </span>
             </div>
           </div>
@@ -699,7 +672,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <PulsingDot />
             <span className="text-xs text-primary" style={MONO}>
-              ALL SYSTEMS NOMINAL
+              TODOS LOS SISTEMAS NOMINALES
             </span>
           </div>
         </div>
