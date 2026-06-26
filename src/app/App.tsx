@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Github, Linkedin, Mail, ExternalLink, ArrowUpRight, ChevronRight, Cpu, Globe, Shield, Zap, Database, Code2 } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, ChevronRight, Cpu, Zap } from "lucide-react";
 import { HudCorners } from "./components/HudCorners/HudCorners";
 import { ProjectCard } from "./components/ProjectCard/ProjectCard";
 import { EXO, MONO, ORBITRON, PROJECTS } from "../Constants";
@@ -9,106 +9,9 @@ import { GridBg } from "./components/GridBg/GridBg";
 import { GlowOrb } from "./components/GlowOrb/GlowOrb";
 import { Ticker } from "./components/Ticker/Ticker";
 import { StatCard } from "./components/StatCard/StatCard";
-
-/* ─── Data ─────────────────────────────────────────── */
-
-const ABOUT_MY = {
-  item: {
-    long: "Alex Echeverria",
-    short: "A. Echeverria",
-    name: "Alex",
-    surname: "Echeverria",
-    role: "Desarrollador Fullstack",
-  },
-} as const;
-
-const STACK = [
-  {
-    icon: Code2,
-    category: "Frontend",
-    items: [
-      "React",
-      "Angular",
-      "Next.js",
-      "Tailwind CSS",
-      "TypeScript",
-    ],
-  },
-  {
-    icon: Database,
-    category: "Backend",
-    items: ["Node.js", "PostgreSQL", "MySQL", "MongoDB", "Mongoose"],
-  },
-  {
-    icon: Globe,
-    category: "Cloud Platforms",
-    items: [
-      "Vercel",
-      "Render",
-      "GitHub",
-      "MongoDB Atlas",
-    ],
-  },
-  {
-    icon: Shield,
-    category: "Security",
-    items: [
-      "OAuth 2.0",
-      "JWT",
-      "Bcrypt",
-    ],
-  },
-];
-
-const EXPERIENCE = [
-  {
-    company: "Meridian Systems",
-    role: "Fullstack Developer",
-    period: "2022 — NOW",
-    level: "L5",
-    active: true,
-  },
-  {
-    company: "Cloudloop",
-    role: "Fullstack Developer",
-    period: "2020 — 2022",
-    level: "L4",
-    active: false,
-  },
-  {
-    company: "Byte Lab (YC S19)",
-    role: "Software Developer",
-    period: "2019 — 2020",
-    level: "L3",
-    active: false,
-  },
-];
-
-const STATS = [
-  { label: "Años Explorando", value: "9+" },
-  { label: "Proyectos", value: "Varios" },
-  { label: "GitHub Stars", value: "5k+" },
-  { label: "Contributions", value: "2.1k" },
-];
-
-/* ─── Primitives ──────────────────────────────────── */
-
-/** Bracket corners used on HUD cards */
-
-
-
-
-
-
-/** Animated grid background */
-
-
-
-
-
-
-
-
+import { ABOUT_MY, CONTACTS, EXPERIENCE, FAVORITES, STACK, STATS } from "./Data";
+import { ButtonPrimary } from "./components/Button/ButtonPrimary";
+import { ButtonSecondary } from "./components/Button/ButtonSecondary";
 
 /* ─── Main ────────────────────────────────────────── */
 export default function App() {
@@ -172,7 +75,7 @@ export default function App() {
                 { ABOUT_MY.item.short.toUpperCase() }
               </div>
               <div
-                className="text-[10px] text-muted-foreground tracking-widest mt-0.5"
+                className="text-[12px] text-foreground tracking-widest mt-0.5"
                 style={MONO}
               >
                 DEV · SYSTEM
@@ -187,7 +90,7 @@ export default function App() {
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group"
+                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group text-white"
                     style={MONO}
                   >
                     {link}
@@ -244,19 +147,19 @@ export default function App() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-16 items-start relative z-10">
           <div className="animate-fade-in-up">
             {/* Status bar */}
-            <div className="inline-flex items-center gap-3 border border-primary/30 bg-primary/5 px-4 py-2 mb-8 animated-border transition-all">
+            <div className="inline-flex items-center gap-3 border border-primary/30 bg-primary/5 px-4 py-2 mb-8 animated-border transition-all uppercase" >
               <PulsingDot />
               <span
                 className="text-xs text-primary tracking-widest"
                 style={MONO}
               >
-                NEURAL LINK ESTABLISHED · BERLIN NODE · DISPONIBLE A OPORTUNIDADES
+                Enlace neuronal establecido · Nodo de Mar del Plata · DISPONIBLE A OPORTUNIDADES
               </span>
             </div>
 
             {/* Name */}
             <h1
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight uppercase mb-2 animate-pulse-glow"
+              className="text-4xl md:text-6xl lg:text-8xl font-black leading-none tracking-tight uppercase mb-4 animate-pulse-glow"
               style={ORBITRON}
             >
               <span className="block text-foreground animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -279,7 +182,7 @@ export default function App() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-8 bg-primary/50" />
               <span
-                className="text-sm tracking-[0.3em] uppercase text-secondary-foreground"
+                className="text-sm tracking-[0.3em] uppercase text-foreground"
                 style={MONO}
               >
                 { ABOUT_MY.item.role }
@@ -290,43 +193,30 @@ export default function App() {
               className="text-base text-secondary-foreground leading-relaxed max-w-xl mb-8"
               style={EXO}
             >
-              Six years engineering products from bare metal to
-              browser. I specialize in distributed systems and
-              the interfaces that make them disappear. Every
-              decision is a performance decision.
+              Apasionado por construir aplicaciones web eficientes, escalables y con un diseño cuidado. 
+              Especializado en el ecosistema de JavaScript/TypeScript (Node.js & React), con sólida base 
+              en arquitecturas de software y bases de datos.
             </p>
 
-            {/* CTA */}
+            {/* CTA (Botones de acción) */}
             <div className="flex items-center gap-4 flex-wrap animate-fade-in-up" style={{ animationDelay: '0.6s', opacity: 0 }}>
-              <a
-                href="#projects"
-                className="glow-btn inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs tracking-widest uppercase font-semibold transition-all hover:scale-105"
-                style={ORBITRON}
-              >
-                Ver Sistemas <ArrowUpRight size={13} />
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 border border-primary/40 text-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/10 transition-all hover:scale-105 hover:border-primary/70"
-                style={ORBITRON}
-              >
-                Canal Abierto
-              </a>
+              <ButtonPrimary children={"Ver proyectos"} href={"#projects"} />
+              <ButtonSecondary children={"Contactame"} href={"#contact"} />
               <a
                 href="https://github.com/echeverriaalex"
                 target="_blank"
                 rel="noreferrer"
-                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
               >
-                <Github size={15} />
+                <Github size={20} />
               </a>
               <a
                 href="https://www.linkedin.com/in/alexnahuelecheverria/"
                 target="_blank"
                 rel="noreferrer"
-                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
               >
-                <Linkedin size={15} />
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
@@ -352,37 +242,33 @@ export default function App() {
             </div>
 
             <div className="space-y-2">
-              {[
-                { label: "React", pct: 95, color: "#00d4ff" },
-                { label: "Angular", pct: 83, color: "#ff4800" },
-                { label: "TypeScript", pct: 70, color: "#0077ff" },
-                { label: "Node.js", pct: 85, color: "#fff461" },
-                { label: "MongoDB", pct: 83, color: "#10c528" },
-              ].map((bar) => (
-                <div key={bar.label}>
-                  <div
-                    className="flex justify-between text-[11px] mb-1"
-                    style={MONO}
-                  >
-                    <span className="text-secondary-foreground">
-                      {bar.label}
-                    </span>
-                    <span style={{ color: bar.color }}>
-                      {bar.pct}%
-                    </span>
-                  </div>
-                  <div className="h-1 bg-secondary overflow-hidden">
+              {
+                FAVORITES.map((bar) => (
+                  <div key={bar.label}>
                     <div
-                      className="h-full transition-all duration-1000"
-                      style={{
-                        width: `${bar.pct}%`,
-                        backgroundColor: bar.color,
-                        boxShadow: `0 0 6px ${bar.color}80`,
-                      }}
-                    />
+                      className="flex justify-between text-[15px] mb-1"
+                      style={MONO}
+                    >
+                      <span className="text-secondary-foreground text-white">
+                        {bar.label}
+                      </span>
+                      <span style={{ color: bar.color }}>
+                        {bar.pct}%
+                      </span>
+                    </div>
+                    <div className="h-1 bg-secondary overflow-hidden">
+                      <div
+                        className="h-full transition-all duration-1000"
+                        style={{
+                          width: `${bar.pct}%`,
+                          backgroundColor: bar.color,
+                          boxShadow: `0 0 6px ${bar.color}80`,
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              }
             </div>
 
             <div className="mt-6 pt-4 border-t border-border">
@@ -390,7 +276,7 @@ export default function App() {
                 className="text-[11px] text-muted-foreground"
                 style={MONO}
               >
-                LAST COMMIT —{" "}
+                ÚLTIMO COMMIT —{" "}
                 <span className="text-primary">9h ago</span> ·
                 main · feat/auth-v3
               </div>
@@ -585,74 +471,54 @@ export default function App() {
             </div>
           </div>
           <div className="space-y-3 animate-fade-in-right">
-            {[
-              {
-                icon: Mail,
-                label: "alexnahuelecheverria@gmail.com",
-                sub: "Primary",
-                href: "mailto:alexnahuelecheverria@gmail.com",
-                color: "#00d4ff",
-              },
-              {
-                icon: Github,
-                label: "github.com/echeverriaalex",
-                sub: "Code Repos",
-                href: "https://github.com/echeverriaalex",
-                color: "#7b61ff",
-              },
-              {
-                icon: Linkedin,
-                label: "in/alexnahuelecheverria",
-                sub: "Professional",
-                href: "https://www.linkedin.com/in/alexnahuelecheverria/",
-                color: "#00ffa3",
-              },
-            ].map(({ icon: Icon, label, sub, href, color }, idx) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                className="group relative flex items-center gap-4 p-4 border border-border bg-card hover:bg-card/80 transition-all card-hover animated-border"
-                style={{ borderColor: "rgba(0,212,255,0.15)", animationDelay: `${idx * 0.1}s` }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.borderColor =
-                    color + "55")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.borderColor =
-                    "rgba(0,212,255,0.15)")
-                }
-              >
-                <div
-                  className="w-9 h-9 border flex items-center justify-center flex-shrink-0 transition-colors"
-                  style={{
-                    borderColor: color + "40",
-                    backgroundColor: color + "0d",
-                  }}
+            {
+              CONTACTS.map(({ icon: Icon, label, sub, href, color }, idx) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group relative flex items-center gap-4 p-4 border border-border bg-card hover:bg-card/80 transition-all card-hover animated-border"
+                  style={{ borderColor: "rgba(0,212,255,0.15)", animationDelay: `${idx * 0.1}s` }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.borderColor =
+                      color + "55")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.borderColor =
+                      "rgba(0,212,255,0.15)")
+                  }
                 >
-                  <Icon size={15} style={{ color }} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p
-                    className="text-foreground text-sm font-medium truncate"
-                    style={MONO}
+                  <div
+                    className="w-9 h-9 border flex items-center justify-center flex-shrink-0 transition-colors"
+                    style={{
+                      borderColor: color + "40",
+                      backgroundColor: color + "0d",
+                    }}
                   >
-                    {label}
-                  </p>
-                  <p
-                    className="text-muted-foreground text-xs tracking-widest mt-0.5"
-                    style={MONO}
-                  >
-                    {sub}
-                  </p>
-                </div>
-                <ArrowUpRight
-                  size={13}
-                  className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0"
-                />
-              </a>
-            ))}
+                    <Icon size={15} style={{ color }} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className="text-foreground text-sm font-medium truncate"
+                      style={MONO}
+                    >
+                      {label}
+                    </p>
+                    <p
+                      className="text-muted-foreground text-xs tracking-widest mt-0.5"
+                      style={MONO}
+                    >
+                      {sub}
+                    </p>
+                  </div>
+                  <ArrowUpRight
+                    size={13}
+                    className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0"
+                  />
+                </a>
+              ))
+            }
           </div>
         </div>
       </section>
