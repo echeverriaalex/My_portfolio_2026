@@ -14,13 +14,13 @@ export const StatCard = ({ stat }: { stat: { label: string; value: string } }) =
                 textShadow: "0 0 15px rgba(0,212,255,0.4)",
             }}
         >
-        {stat.value}
+            {stat.value}
         </div>
         <div
-            className="text-xs text-muted-foreground tracking-widest uppercase"
+            className="text-xs text-foreground tracking-widest uppercase"
             style={MONO}
         >
-        {stat.label}
+            {stat.label}
         </div>
     </div>
   );
