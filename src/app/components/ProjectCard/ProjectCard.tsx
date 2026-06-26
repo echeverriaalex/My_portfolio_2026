@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { HudCorners } from "../HudCorners/HudCorners";
 import { EXO, MONO, ORBITRON, PROJECTS } from "../../../Constants";
-
-import { Github, Linkedin, Mail, ExternalLink, ArrowUpRight, ChevronRight, Cpu, Globe, Shield, Zap, Database, Code2 } from "lucide-react";
+import { ExternalLink, ChevronRight } from "lucide-react";
 import { PulsingDot } from "../PulsingDot/PulsingDot";
 
-/* ─── Project card ────────────────────────────────── */
 export function ProjectCard({
   project,
 }: {
