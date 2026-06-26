@@ -3,20 +3,20 @@ import { MONO } from "../../../Constants";
 /* ─── Ticker ──────────────────────────────────────── */
 export function Ticker() {
   const items = [
-    "NEURAL LINK ACTIVE",
-    "SYSTEM INTEGRITY 99.8%",
-    "ENCRYPTION ENABLED",
-    "NODE BERLIN-01 CONNECTED",
-    "UPTIME 847 DAYS",
-    "THREAT LEVEL: NONE",
-    "QUANTUM FIREWALL ACTIVE",
-    "BIOMETRIC AUTH PASSED",
+    "ENLACE NEURAL ACTIVO",
+    "INTEGRIDAD DEL SISTEMA 99.8%",
+    "ENCRIPTACIÓN HABILITADA",
+    "NODO MAR DEL PLATA-0223 CONECTADO",
+    "TIEMPO ACTIVO 847 DÍAS",
+    "NIVEL DE AMENAZA: NINGUNO",
+    "CORTAFUEGOS CUÁNTICO ACTIVO",
+    "AUTENTICACIÓN BIOMÉTRICA APROBADA",
   ];
   const text = items.join("   ◈   ");
   return (
-    <div className="overflow-hidden border-b border-border/50 py-1.5 bg-secondary/30">
+    <div className="overflow-hidden border-b border-border/50 py-5 bg-secondary/40">
       <div
-        className="whitespace-nowrap text-xs text-primary/50 tracking-widest"
+        className="whitespace-nowrap text-xs text-primary/90 tracking-widest"
         style={{
           ...MONO,
           animation: "ticker 40s linear infinite",
@@ -63,7 +63,7 @@ export function Ticker() {
           50% { text-shadow: 0 0 20px rgba(0,212,255,0.6), 0 0 40px rgba(0,212,255,0.3); }
         }
         @keyframes border-glow {
-          0%, 100% { border-color: rgba(0,212,255,0.2); box-shadow: inset 0 0 10px rgba(0,212,255,0.05); }
+          0%, 100% { border-color: rgba(9, 149, 177, 0.2); box-shadow: inset 0 0 10px rgba(0,212,255,0.05); }
           50% { border-color: rgba(0,212,255,0.5); box-shadow: inset 0 0 20px rgba(0,212,255,0.15), 0 0 15px rgba(0,212,255,0.3); }
         }
         @keyframes float-up {
