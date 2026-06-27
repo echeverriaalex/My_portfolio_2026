@@ -73,10 +73,10 @@ export const EXPERIENCE = [
 ];
 
 export const STATS = [
-  { label: "Años Explorando", value: "9+" },
+  { label: "Años coding", value: "9+" },
   { label: "Proyectos", value: "20+" },
-  { label: "Repos en GitHub", value: "100+" },
-  { label: "Contributions", value: "2.1k" },
+  { label: "Repositorios", value: "100+" },
+  { label: "Tecnologías", value: "10+" },
 ];
 
 export const CONTACTS = [
