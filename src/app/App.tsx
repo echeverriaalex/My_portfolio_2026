@@ -9,7 +9,7 @@ import { GridBg } from "./components/GridBg/GridBg";
 import { GlowOrb } from "./components/GlowOrb/GlowOrb";
 import { Ticker } from "./components/Ticker/Ticker";
 import { StatCard } from "./components/StatCard/StatCard";
-import { ABOUT_MY, CONTACTS, EXPERIENCE, FAVORITES, STACK, STATS } from "./Data";
+import { ABOUT_MY, CONTACTS, EDUCATION, EXPERIENCE, FAVORITES, STACK, STATS } from "./Data";
 import { ButtonPrimary } from "./components/Button/ButtonPrimary";
 import { ButtonSecondary } from "./components/Button/ButtonSecondary";
 
@@ -33,10 +33,7 @@ export default function App() {
   }, []);
 
   return (
-    <div
-      className="min-h-screen bg-background text-foreground relative overflow-x-hidden"
-      style={EXO}
-    >
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden flex flex-col gap-[30px]" style={EXO}>
       <GridBg />
 
       {/* Subtle scanline */}
@@ -52,10 +49,7 @@ export default function App() {
       <Ticker />
 
       {/* ── Nav ── */}
-      <nav
-        ref={navRef}
-        className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl"
-      >
+      <nav ref={navRef} className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-8">
           {/* Logo */}
           <div className="flex items-center gap-3 flex-shrink-0">
@@ -193,9 +187,10 @@ export default function App() {
               className="text-base text-secondary-foreground leading-relaxed max-w-xl mb-8"
               style={EXO}
             >
-              Apasionado por construir aplicaciones web eficientes, escalables y con un diseño cuidado. 
-              Especializado en el ecosistema de JavaScript/TypeScript (Node.js & React), con sólida base 
-              en arquitecturas de software y bases de datos.
+              Desarrollador Full-Stack, graduado de la UTN con una fuerte base técnica autodidacta.
+              Manejo el stack MERN, MEAN y bases de datos relacionales y no relacionales.
+              Con experiencia real construyendo portales web con visualización de datos. 
+              Busco oportunidades de trabajo en un entorno profesional donde pueda crecer y aportar mis habilidades.
             </p>
 
             {/* CTA (Botones de acción) */}
@@ -290,33 +285,28 @@ export default function App() {
         id="profile-detail"
         className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
       >
-        <SectionLabel>Operator Profile</SectionLabel>
+        <SectionLabel>Sobre mí</SectionLabel>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16">
           <div
             className="space-y-5 text-secondary-foreground text-base leading-relaxed"
             style={EXO}
           >
             <p>
-              I started programming at 14 writing PHP for small
-              local businesses. Today I build distributed
-              systems that handle millions of events per day and
-              the interfaces that make those systems
-              comprehensible to humans. Most of my career has
-              been in early-stage startups where engineering and
-              product thinking are inseparable.
+              Soy Técnico Superior en Programación egresado de la UTN, con un perfil orientado
+              al desarrollo Full Stack. Mi formación universitaria me dio una base lógica y
+              estructural muy sólida, la cual potencio día a día expandiendo mis habilidades
+              de forma autodidacta para dominar las tecnologías y frameworks más demandados
+              del ecosistema actual.
             </p>
             <p>
-              My focus is on the boundary between infrastructure
-              and experience — where architecture decisions
-              directly shape what a user feels. I think the best
-              software is invisible: it does exactly what you
-              need before you know you need it.
+              A lo largo de mi recorrido, he trabajado en proyectos que requieren visualización
+              avanzada de datos y soluciones escalables, manteniendo siempre un enfoque firme
+              en optimizar el rendimiento del código y la experiencia intuitiva y agradable del usuario final.
             </p>
             <p>
-              Outside the terminal: long-distance cycling,
-              mechanical keyboards, and distributed systems
-              papers I read on weekends. Currently based in
-              Berlin, working remotely.
+              Me motiva enfrentarme a nuevos desafíos técnicos, conectar arquitecturas robustas
+              en el backend con interfaces dinámicas en el frontend, y aportar valor real en
+              equipos de la industria IT.
             </p>
           </div>
           <div>
@@ -325,7 +315,7 @@ export default function App() {
               style={MONO}
             >
               <Zap size={11} />
-              EMPLOYMENT LOG
+              EXPERIENCIA
             </div>
             <div className="space-y-4">
               {EXPERIENCE.map((exp) => (
@@ -373,12 +363,44 @@ export default function App() {
           </div>
         </div>
       </section>
-
+      
+      {/* ── Formación ── */}
+      <section id="formacion" className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border">
+        <SectionLabel>Formación</SectionLabel>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {EDUCATION.map((edu, i) => {
+            const Icon = edu.icon;
+            const color = i === 0 ? "#00d4ff" : i === 1 ? "#7b61ff" : "#00ffa3";
+            return (
+              <div key={edu.institution} className="relative border border-border bg-card p-5 hover:border-primary/40 transition-colors">
+                <HudCorners color={color} size={9} />
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-8 h-8 border flex items-center justify-center flex-shrink-0" style={{ borderColor: color + "50", backgroundColor: color + "10" }}>
+                    <Icon size={15} style={{ color }} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold tracking-widest uppercase leading-tight mb-0.5" style={{ ...ORBITRON, color }}>
+                      {edu.institution}
+                    </p>
+                    <p className="text-[11px] text-muted-foreground" style={MONO}>{edu.period}</p>
+                  </div>
+                </div>
+                <p className="text-foreground text-sm font-semibold mb-2" style={EXO}>{edu.title}</p>
+                <p className="text-secondary-foreground text-sm leading-relaxed" style={EXO}>{edu.details}</p>
+                {edu.highlight && (
+                  <div className="mt-3 flex items-center gap-1.5">
+                    <PulsingDot color={color} />
+                    <span className="text-[11px] tracking-widest uppercase" style={{ ...MONO, color }}> {edu.highlightText} </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      
       {/* ── Stack ── */}
-      <section
-        id="stack"
-        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
-      >
+      <section id="stack" className="w-full max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border">
         <SectionLabel>Stack Técnico</SectionLabel>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {STACK.map((group, idx) => {
@@ -423,7 +445,7 @@ export default function App() {
       {/* ── Projects ── */}
       <section
         id="projects"
-        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
+        className="w-full max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
       >
         <SectionLabel>Active Systems</SectionLabel>
         <div className="space-y-3">
@@ -436,10 +458,7 @@ export default function App() {
       </section>
 
       {/* ── Contact ── */}
-      <section
-        id="contact"
-        className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
-      >
+      <section id="contact" className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border">
         <SectionLabel>Canal Abierto</SectionLabel>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           <div className="animate-fade-in-left">
