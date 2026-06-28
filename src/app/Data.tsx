@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Globe, Shield, Database, Code2 } from "lucide-react";
+import { Github, Linkedin, Mail, Globe, Shield, Database, Code2, GraduationCap, BookOpen } from "lucide-react";
 
 export const ABOUT_MY = {
   item: {
@@ -109,4 +109,34 @@ export const FAVORITES = [
   { label: "TypeScript", pct: 70, color: "#0077ff" },
   { label: "Node.js", pct: 85, color: "#fff461" },
   { label: "MongoDB", pct: 83, color: "#10c528" },
+];
+
+export const EDUCATION = [
+  {
+    institution: "Universidad Técnológica Nacional — Mar del Plata",
+    title: "Técnico Superior en Programación",
+    period: "2021 — 2024",
+    icon: GraduationCap,
+    highlight: true,
+    highlightText: "Título oficial",
+    details: "Formación en fundamentos de programación, estructuras de datos, algoritmos y desarrollo de software. Lenguajes: C, C++, Java, PHP, JavaScript.",
+  },
+  {
+    institution: "Curso Online — Full Stack MERN",
+    title: "React · Node.js · MongoDB · Express",
+    period: "2023 — 2024",
+    icon: BookOpen,
+    highlight: true,
+    highlightText: "Certificado de finalización",
+    details: "Desarrollo de aplicaciones web completas con el stack MERN. Autenticación con JWT y Bcrypt, manejo de estado, Tailwind CSS y despliegue.",
+  },
+  {
+    institution: "Curso Online — Backend con Node.js",
+    title: "Node.js · PostgreSQL · JWT · Git & GitHub",
+    period: "2023",
+    icon: BookOpen,
+    highlight: true,
+    highlightText: "Certificado de finalización",
+    details: "Arquitectura de APIs REST, bases de datos relacionales con PostgreSQL, autenticación segura y control de versiones con Git y GitHub.",
+  },
 ];
