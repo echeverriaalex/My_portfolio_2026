@@ -113,26 +113,26 @@ export const FAVORITES = [
 
 export const EDUCATION = [
   {
-    institution: "Universidad Técnológica Nacional — Mar del Plata",
+    institution: "UTN — Mar del Plata",
     title: "Técnico Superior en Programación",
     period: "2021 — 2024",
     icon: GraduationCap,
     highlight: true,
     highlightText: "Título oficial",
-    details: "Formación en fundamentos de programación, estructuras de datos, algoritmos y desarrollo de software. Lenguajes: C, C++, Java, PHP, JavaScript.",
+    details: "Formación en fundamentos de programación, estructuras de datos, algoritmos y desarrollo de software con C, C++, Java, PHP, JavaScript, TypeScript, MySQL, Angular.",
   },
   {
-    institution: "Curso Online — Full Stack MERN",
-    title: "React · Node.js · MongoDB · Express",
+    institution: "Nucba",
+    title: "Desarrollador Full Stack MERN",
     period: "2023 — 2024",
     icon: BookOpen,
     highlight: true,
     highlightText: "Certificado de finalización",
-    details: "Desarrollo de aplicaciones web completas con el stack MERN. Autenticación con JWT y Bcrypt, manejo de estado, Tailwind CSS y despliegue.",
+    details: "Desarrollo de aplicaciones web completas con el stack MERN. Autenticación con JWT y Bcrypt, manejo de estado, Tailwind CSS, control de versiones con Git y GitHub y despliegue.",
   },
   {
-    institution: "Curso Online — Backend con Node.js",
-    title: "Node.js · PostgreSQL · JWT · Git & GitHub",
+    institution: "Avalith",
+    title: "Desarrollador Backend con Node.js",
     period: "2023",
     icon: BookOpen,
     highlight: true,
