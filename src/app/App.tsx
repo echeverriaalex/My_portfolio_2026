@@ -372,7 +372,7 @@ export default function App() {
             const Icon = edu.icon;
             const color = i === 0 ? "#00d4ff" : i === 1 ? "#7b61ff" : "#00ffa3";
             return (
-              <div key={edu.institution} className="relative border border-border bg-card p-5 hover:border-primary/40 transition-colors">
+              <div key={edu.institution} className="relative border border-border bg-card p-5 hover:border-primary/40 transition-colors" style={{ backgroundColor: color + "10", borderColor: color + "50", borderWidth: "1px", borderRadius: "4px" }}>
                 <HudCorners color={color} size={9} />
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-8 h-8 border flex items-center justify-center flex-shrink-0" style={{ borderColor: color + "50", backgroundColor: color + "10" }}>
@@ -385,12 +385,28 @@ export default function App() {
                     <p className="text-[11px] text-muted-foreground" style={MONO}>{edu.period}</p>
                   </div>
                 </div>
-                <p className="text-foreground text-sm font-semibold mb-2" style={EXO}>{edu.title}</p>
-                <p className="text-secondary-foreground text-sm leading-relaxed" style={EXO}>{edu.details}</p>
+                <div className="flex flex-col mb-8">
+                  <p className="text-foreground text-sm font-semibold mb-2" style={EXO}>{edu.title}</p>
+                  <p className="text-secondary-foreground text-sm leading-relaxed" style={EXO}>{edu.details}</p>
+                </div>
                 {edu.highlight && (
-                  <div className="mt-3 flex items-center gap-1.5">
+                  <div
+                    className="flex items-center"
+                    style={{
+                      gap: "5px",
+                      backgroundColor: color + "10",
+                      borderColor: color + "50",
+                      position: "absolute",
+                      bottom: "12px",
+                      left: "16px",
+                      right: "16px",
+                      borderWidth: "1px",
+                      borderRadius: "4px",
+                      padding: "6px 8px",
+                    }}
+                  >
                     <PulsingDot color={color} />
-                    <span className="text-[11px] tracking-widest uppercase" style={{ ...MONO, color }}> {edu.highlightText} </span>
+                    <span className="text-[11px] tracking-widest uppercase" style={{ ...MONO, color, bottom: "2px" }}> {edu.highlightText} </span>
                   </div>
                 )}
               </div>
@@ -447,7 +463,10 @@ export default function App() {
         id="projects"
         className="w-full max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
       >
-        <SectionLabel>Active Systems</SectionLabel>
+        <SectionLabel>Proyectos</SectionLabel>
+        <p className="text-secondary-foreground text-base mb-6 -mt-4" style={EXO}>
+          Proyectos personales desarrollados durante mi formación. Haz clic para ver detalles.
+        </p>
         <div className="space-y-3">
           {PROJECTS.map((project, idx) => (
             <div key={project.id} className="animate-fade-in-up card-hover" style={{ animationDelay: `${idx * 0.15}s`, opacity: 0 }}>
@@ -459,7 +478,7 @@ export default function App() {
 
       {/* ── Contact ── */}
       <section id="contact" className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border">
-        <SectionLabel>Canal Abierto</SectionLabel>
+        <SectionLabel>Contacto</SectionLabel>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           <div className="animate-fade-in-left">
             <h2
@@ -469,15 +488,19 @@ export default function App() {
                 textShadow: "0 0 20px rgba(0,212,255,0.3)",
               }}
             >
-              <span className="text-foreground">INICIAR</span>
+              <span className="text-foreground">Hablemos</span>
               <br />
-              <span className="text-primary">CONEXIÓN.</span>
+              <span className="text-primary">del rol.</span>
             </h2>
             <p
               className="text-secondary-foreground leading-relaxed text-base mb-6"
               style={EXO}
             >
-              Disponible para roles de desarrollador fullstack y de personal, compromisos de CTO fraccionados, y colaboraciones seleccionadas en código abierto. Canal encriptado. Respuesta garantizada dentro de 24 horas.
+              Actualmente me encuentro en la búsqueda de mi primera oportunidad profesional como
+              Desarrollador Full Stack. Me entusiasma incorporarme a un equipo donde pueda aportar
+              mis conocimientos lógicos y técnicos, afrontar nuevos desafíos y continuar creciendo.
+              Tengo total disponibilidad para posiciones remotas o presenciales en Argentina,
+              y mantengo una comunicación activa con una tasa de respuesta menor a 24 horas.
             </p>
             <div className="border border-primary/20 bg-primary/5 px-4 py-3 flex items-center gap-3">
               <PulsingDot />
