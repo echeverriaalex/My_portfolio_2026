@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { HudCorners } from "../HudCorners/HudCorners";
 import { EXO, MONO, ORBITRON, PROJECTS } from "../../../Constants";
-import { ExternalLink, ChevronRight } from "lucide-react";
+import { ExternalLink, ChevronRight, Github, SquareArrowOutUpRight } from "lucide-react";
 import { PulsingDot } from "../PulsingDot/PulsingDot";
 
 export function ProjectCard({
@@ -72,6 +72,28 @@ export function ProjectCard({
             color: open ? project.color : undefined,
           }}
         />
+        
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noreferrer"
+            className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
+          >
+            <SquareArrowOutUpRight  size={20} />
+          </a>
+        ) }
+
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noreferrer"
+            className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
+          >
+            <Github size={20} />
+          </a>
+        )}
       </div>
 
       {/* Expanded body */}
@@ -102,12 +124,14 @@ export function ProjectCard({
               </span>
             ))}
             <a
-              href="#"
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               className="ml-auto inline-flex items-center gap-1.5 text-xs hover:underline transition-colors"
               style={{ ...MONO, color: project.color }}
             >
-              ACCESS <ExternalLink size={11} />
+              ACCESS <ExternalLink  size={11} />
             </a>
           </div>
         </div>
