@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { HudCorners } from "../HudCorners/HudCorners";
-import { EXO, MONO, ORBITRON, PROJECTS } from "../../../Constants";
+import { EXO, MONO, ORBITRON } from "../../../Fonts";
 import { ExternalLink, ChevronRight, Github, SquareArrowOutUpRight } from "lucide-react";
 import { PulsingDot } from "../PulsingDot/PulsingDot";
+import { PROJECTS } from "../../Data";
 
 export function ProjectCard({
   project,
@@ -11,11 +12,13 @@ export function ProjectCard({
 }) {
   const [open, setOpen] = useState(false);
   const statusColor =
-    project.status === "ONLINE"
+    project.status === "ONLINE" || project.status === "FUNCIONANDO"
       ? "#00ffa3"
-      : project.status === "STABLE"
+      : project.status === "CONECTADO"
         ? "#00d4ff"
-        : "#4d7a99";
+        : project.status === "SIN CONEXIÓN"
+          ? "#ff4d4d"
+          : "#4d7a99";
 
   return (
     <div
