@@ -1,4 +1,4 @@
-import { MONO, ORBITRON } from "../../../Constants";
+import { MONO, ORBITRON } from "../../../Fonts";
 
 export const StatCard = ({ stat }: { stat: { label: string; value: string } }) => {
   return (

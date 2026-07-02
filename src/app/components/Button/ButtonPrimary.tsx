@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { ORBITRON } from "../../../Constants";
+import { ORBITRON } from "../../../Fonts";
 
 export const ButtonPrimary = ({
   children,

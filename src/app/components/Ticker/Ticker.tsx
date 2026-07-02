@@ -1,4 +1,4 @@
-import { MONO } from "../../../Constants";
+import { MONO } from "../../../Fonts";
 
 /* ─── Ticker ──────────────────────────────────────── */
 export function Ticker() {

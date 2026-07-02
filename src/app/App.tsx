@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { Github, Linkedin, Mail, ArrowUpRight, ChevronRight, Cpu, Zap } from "lucide-react";
 import { HudCorners } from "./components/HudCorners/HudCorners";
 import { ProjectCard } from "./components/ProjectCard/ProjectCard";
-import { EXO, MONO, ORBITRON, PROJECTS } from "../Constants";
+import { EXO, MONO, ORBITRON } from "../Fonts";
 import { PulsingDot } from "./components/PulsingDot/PulsingDot";
 import { SectionLabel } from "./components/SectionLabel/SectionLabel";
 import { GridBg } from "./components/GridBg/GridBg";
 import { GlowOrb } from "./components/GlowOrb/GlowOrb";
 import { Ticker } from "./components/Ticker/Ticker";
 import { StatCard } from "./components/StatCard/StatCard";
-import { ABOUT_MY, CONTACTS, EDUCATION, EXPERIENCE, FAVORITES, STACK, STATS } from "./Data";
+import { ABOUT_MY, CONTACTS, EDUCATION, EXPERIENCE, FAVORITES, PROJECTS, STACK, STATS } from "./Data";
 import { ButtonPrimary } from "./components/Button/ButtonPrimary";
 import { ButtonSecondary } from "./components/Button/ButtonSecondary";
 
