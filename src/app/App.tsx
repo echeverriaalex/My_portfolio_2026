@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Github, Linkedin, Mail, ArrowUpRight, ChevronRight, Cpu, Zap } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, ChevronRight, Cpu, Zap, Menu, X } from "lucide-react";
 import { HudCorners } from "./components/HudCorners/HudCorners";
 import { ProjectCard } from "./components/ProjectCard/ProjectCard";
 import { EXO, MONO, ORBITRON } from "../Fonts";
@@ -9,15 +9,21 @@ import { GridBg } from "./components/GridBg/GridBg";
 import { GlowOrb } from "./components/GlowOrb/GlowOrb";
 import { Ticker } from "./components/Ticker/Ticker";
 import { StatCard } from "./components/StatCard/StatCard";
-import { ABOUT_MY, CONTACTS, EDUCATION, EXPERIENCE, FAVORITES, PROJECTS, STACK, STATS } from "./Data";
+import { ABOUT_MY, CONTACTS, EDUCATION, EXPERIENCE, FAVORITES, NAV_LINKS, PROJECTS, STACK, STATS } from "./Data";
 import { ButtonPrimary } from "./components/Button/ButtonPrimary";
 import { ButtonSecondary } from "./components/Button/ButtonSecondary";
+import { Navbar } from "./components/NavBar/NevBar";
+import { Logo } from "./components/Logo/Logo";
+import { RightSide } from "./components/RightSide/RightSide";
 
 /* ─── Main ────────────────────────────────────────── */
 export default function App() {
+
+  const navRef = useRef<HTMLElement>(null);
+
   const [time, setTime] = useState(new Date());
   const [bootSeq, setBootSeq] = useState(0);
-  const navRef = useRef<HTMLElement>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
@@ -32,8 +38,12 @@ export default function App() {
     return () => clearInterval(t);
   }, []);
 
+ 
+
+
+
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden flex flex-col gap-[30px]" style={EXO}>
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden flex flex-col gap-[30px]" style={ EXO }>
       <GridBg />
 
       {/* Subtle scanline */}
@@ -50,85 +60,139 @@ export default function App() {
 
       {/* ── Nav ── */}
       <nav ref={navRef} className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-8">
-          {/* Logo */}
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <div
-              className="relative w-8 h-8 flex items-center justify-center border border-primary/40"
-              style={{
-                boxShadow: "0 0 12px rgba(0,212,255,0.2)",
-              }}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-0 flex flex-col gap-3 md:block">
+          <div className="flex items-center justify-between gap-4 md:hidden">
+            <div className="flex items-center gap-3 flex-shrink-0 min-w-0">
+              <div
+                className="relative w-8 h-8 flex items-center justify-center border border-primary/40"
+                style={{ boxShadow: "0 0 12px rgba(0,212,255,0.2)" }}
+              >
+                <Cpu size={16} className="text-primary" />
+              </div>
+              <div>
+                <div
+                  className="text-sm font-bold tracking-widest uppercase leading-none hud-text"
+                  style={{ ...ORBITRON, color: "#00d4ff" }}
+                >
+                  { ABOUT_MY.item.short.toUpperCase() }
+                </div>
+                <div className="text-[12px] text-foreground tracking-widest mt-0.5" style={MONO}>
+                  DEV · SYSTEM
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="inline-flex md:hidden items-center justify-center w-10 h-10 border border-border text-foreground hover:text-primary hover:border-primary/50 transition-colors flex-shrink-0"
+              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-links"
+              onClick={() => setMobileMenuOpen((open) => !open)}
             >
-              <Cpu size={16} className="text-primary" />
-            </div>
-            <div>
-              <div
-                className="text-sm font-bold tracking-widest uppercase leading-none hud-text"
-                style={{ ...ORBITRON, color: "#00d4ff" }}
-              >
-                { ABOUT_MY.item.short.toUpperCase() }
-              </div>
-              <div
-                className="text-[12px] text-foreground tracking-widest mt-0.5"
-                style={MONO}
-              >
-                DEV · SYSTEM
-              </div>
-            </div>
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
           </div>
 
-          {/* Links */}
-          <ul className="hidden md:flex items-center gap-7">
-            {["Perfil", "Stack", "Proyectos", "Contacto"].map(
-              (link) => (
-                <li key={link}>
-                  <a
-                    href={`#${link.toLowerCase()}`}
-                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group text-white"
-                    style={MONO}
-                  >
-                    {link}
-                    <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all group-hover:w-full" />
-                  </a>
-                </li>
-              ),
-            )}
-          </ul>
-
-          {/* Right side: clock + boot indicator */}
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <div className="hidden sm:flex items-center gap-2">
+          <div className="flex w-full md:hidden items-center gap-3 flex-shrink-0">
+            <div className="flex items-center gap-2">
               <PulsingDot />
-              <span
-                className="text-xs text-primary tabular-nums"
-                style={MONO}
-              >
+              <span className="text-[10px] text-primary tabular-nums whitespace-nowrap" style={MONO}>
                 {time.toLocaleTimeString("en-GB")}
               </span>
             </div>
-            <div className="hidden md:flex items-center gap-1.5 border border-border px-2.5 py-1">
-              <span
-                className="text-[10px] text-muted-foreground"
-                style={MONO}
-              >
+            <div className="flex items-center gap-1.5 border border-border px-2 py-1 flex-1">
+              <span className="text-[10px] text-muted-foreground" style={MONO}>
                 SYS
               </span>
-              <div className="w-16 h-1 bg-secondary overflow-hidden">
-                <div
-                  className="h-full bg-primary transition-all duration-75"
-                  style={{ width: `${bootSeq}%` }}
-                />
+              <div className="w-full h-1 bg-secondary overflow-hidden">
+                <div className="h-full bg-primary transition-all duration-75" style={{ width: `${bootSeq}%` }} />
               </div>
-              <span
-                className="text-[10px] text-primary"
-                style={MONO}
-              >
+              <span className="text-[10px] text-primary" style={MONO}>
                 {bootSeq}%
               </span>
             </div>
           </div>
+
+          <div className="hidden md:flex items-center justify-between gap-8 h-14">
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div
+                className="relative w-8 h-8 flex items-center justify-center border border-primary/40"
+                style={{ boxShadow: "0 0 12px rgba(0,212,255,0.2)" }}
+              >
+                <Cpu size={16} className="text-primary" />
+              </div>
+              <div>
+                <div
+                  className="text-sm font-bold tracking-widest uppercase leading-none hud-text"
+                  style={{ ...ORBITRON, color: "#00d4ff" }}
+                >
+                  { ABOUT_MY.item.short.toUpperCase() }
+                </div>
+                <div className="text-[12px] text-foreground tracking-widest mt-0.5" style={MONO}>
+                  DEV · SYSTEM
+                </div>
+              </div>
+            </div>
+
+            <ul className="hidden md:flex items-center gap-7">
+              {NAV_LINKS.map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id.toLowerCase()}`}
+                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group text-white"
+                    style={MONO}
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all group-hover:w-full" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex items-center gap-4 flex-shrink-0">
+              <div className="hidden sm:flex items-center gap-2">
+                <PulsingDot />
+                <span className="text-xs text-primary tabular-nums" style={MONO}>
+                  {time.toLocaleTimeString("en-GB")}
+                </span>
+              </div>
+              <div className="hidden md:flex items-center gap-1.5 border border-border px-2.5 py-1">
+                <span className="text-[10px] text-muted-foreground" style={MONO}>
+                  SYS
+                </span>
+                <div className="w-16 h-1 bg-secondary overflow-hidden">
+                  <div className="h-full bg-primary transition-all duration-75" style={{ width: `${bootSeq}%` }} />
+                </div>
+                <span className="text-[10px] text-primary" style={MONO}>
+                  {bootSeq}%
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
+
+        <div
+          id="mobile-nav-links"
+          className={`md:hidden overflow-hidden border-t border-border bg-background/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 ${mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}
+        >
+          <ul className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-2">
+            {NAV_LINKS.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id.toLowerCase()}`}
+                  className="flex items-center justify-between rounded-md border border-border px-4 py-3 text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+                  style={MONO}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                  <span className="text-primary">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
       {/* ── Hero ── */}
       <section
@@ -282,7 +346,7 @@ export default function App() {
 
       {/* ── Profile / About ── */}
       <section
-        id="profile-detail"
+        id="aboutme"
         className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border"
       >
         <SectionLabel>Sobre mí</SectionLabel>
@@ -365,7 +429,7 @@ export default function App() {
       </section>
       
       {/* ── Formación ── */}
-      <section id="formacion" className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border">
+      <section id="education" className="max-w-6xl mx-auto px-6 py-20 border-t border-border animated-border">
         <SectionLabel>Formación</SectionLabel>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {EDUCATION.map((edu, i) => {
