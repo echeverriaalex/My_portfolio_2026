@@ -1,5 +1,14 @@
 import { Github, Linkedin, Mail, Globe, Shield, Database, Code2, GraduationCap, BookOpen } from "lucide-react";
 
+export const NAV_LINKS = [
+  { label: "Perfil", id: "profile" },
+  { label: "Sobre mi", id: "aboutme" },
+  { label: "Formación", id: "education" },
+  { label: "Stack", id: "stack" },
+  { label: "Proyectos", id: "projects" },
+  { label: "Contacto", id: "contact" },
+];
+
 export const ABOUT_MY = {
   item: {
     long: "Alex Echeverria",
