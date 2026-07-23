@@ -1,5 +1,5 @@
 export function HudCorners({
-  color = "#00d4ff",
+  color = "var(--primary)",
   size = 12,
 }: {
   color?: string;

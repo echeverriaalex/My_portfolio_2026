@@ -1,4 +1,4 @@
-export function PulsingDot({ color = "#00d4ff" }: { color?: string }) {
+export function PulsingDot({ color = "var(--primary)" }: { color?: string }) {
   return (
     <span className="relative inline-flex h-2 w-2">
       <span

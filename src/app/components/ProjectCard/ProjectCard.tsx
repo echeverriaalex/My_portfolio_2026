@@ -27,7 +27,7 @@ export function ProjectCard({
         open
           ? {
               borderColor: project.color + "55",
-              backgroundColor: "#041c33",
+              backgroundColor: "var(--card)",
             }
           : {}
       }
@@ -36,23 +36,59 @@ export function ProjectCard({
       <HudCorners color={project.color} size={10} />
 
       {/* Header row */}
-      <div className="flex items-center gap-4 p-5">
+      <div className="flex flex-col gap-3 p-5 md:flex-row md:items-center md:gap-4">
         <span
           className="text-xs text-muted-foreground w-16 flex-shrink-0"
           style={ MONO }
         >
           {project.id}
         </span>
-        <span
-          className="text-base font-bold tracking-widest uppercase flex-1"
-          style={{
-            ...ORBITRON,
-            color: open ? project.color : "#cce8ff",
-          }}
-        >
-          {project.title}
-        </span>
-        <div className="hidden md:flex items-center gap-2">
+        <div className="min-w-0 flex-1">
+          <span
+            className="block text-base font-bold tracking-widest uppercase"
+            style={{
+              ...ORBITRON,
+              color: open ? project.color : "var(--foreground)",
+            }}
+          >
+            {project.title}
+          </span>
+
+          <div className="mt-3 flex items-center gap-2 md:hidden">
+            <ChevronRight
+              size={14}
+              className="text-muted-foreground transition-transform flex-shrink-0"
+              style={{
+                transform: open ? "rotate(90deg)" : "none",
+                color: open ? project.color : undefined,
+              }}
+            />
+
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noreferrer"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              >
+                <SquareArrowOutUpRight size={20} />
+              </a>
+            )}
+
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              >
+                <Github size={20} />
+              </a>
+            )}
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-2 md:ml-auto">
           <PulsingDot color={statusColor} />
           <span
             className="text-xs tracking-widest"
@@ -67,36 +103,39 @@ export function ProjectCard({
         >
           {project.year}
         </span>
-        <ChevronRight
-          size={14}
-          className="text-muted-foreground transition-transform flex-shrink-0"
-          style={{
-            transform: open ? "rotate(90deg)" : "none",
-            color: open ? project.color : undefined,
-          }}
-        />
-        
-        {project.link && (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noreferrer"
-            className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
-          >
-            <SquareArrowOutUpRight  size={20} />
-          </a>
-        ) }
 
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noreferrer"
-            className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
-          >
-            <Github size={20} />
-          </a>
-        )}
+        <div className="hidden md:flex items-center gap-2">
+          <ChevronRight
+            size={14}
+            className="text-muted-foreground transition-transform flex-shrink-0"
+            style={{
+              transform: open ? "rotate(90deg)" : "none",
+              color: open ? project.color : undefined,
+            }}
+          />
+
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+            >
+              <SquareArrowOutUpRight size={20} />
+            </a>
+          )}
+
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+            >
+              <Github size={20} />
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Expanded body */}
