@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Github, Linkedin, Mail, ArrowUpRight, ChevronRight, Cpu, Zap, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, ChevronRight, Cpu, Zap, Menu, X, Monitor, Moon, SunMedium } from "lucide-react";
 import { HudCorners } from "./components/HudCorners/HudCorners";
 import { ProjectCard } from "./components/ProjectCard/ProjectCard";
 import { EXO, MONO, ORBITRON } from "../Fonts";
@@ -12,9 +12,28 @@ import { StatCard } from "./components/StatCard/StatCard";
 import { ABOUT_MY, CONTACTS, EDUCATION, EXPERIENCE, FAVORITES, NAV_LINKS, PROJECTS, STACK, STATS } from "./Data";
 import { ButtonPrimary } from "./components/Button/ButtonPrimary";
 import { ButtonSecondary } from "./components/Button/ButtonSecondary";
-import { Navbar } from "./components/NavBar/NevBar";
+import { Navbar } from "./components/Navbar/Navbar";
 import { Logo } from "./components/Logo/Logo";
 import { RightSide } from "./components/RightSide/RightSide";
+import LineChart from "./components/Graphics/Demo";
+import { Footer } from "./components/Footer/Footer";
+
+type ThemeMode = "system" | "dark" | "light";
+
+const THEME_STORAGE_KEY = "portfolio-theme";
+
+const THEME_CONTROLS: Array<{
+  mode: ThemeMode;
+  label: string;
+  icon: typeof Monitor;
+}> = [
+  { mode: "system", label: "Sistema", icon: Monitor },
+  { mode: "dark", label: "Oscuro", icon: Moon },
+  { mode: "light", label: "Claro", icon: SunMedium },
+];
+
+const getSystemTheme = () =>
+  window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 /* ─── Main ────────────────────────────────────────── */
 export default function App() {
@@ -24,6 +43,26 @@ export default function App() {
   const [time, setTime] = useState(new Date());
   const [bootSeq, setBootSeq] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") {
+      return "dark";
+    }
+
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+
+    return storedTheme === "system" || storedTheme === "dark" || storedTheme === "light"
+      ? storedTheme
+      : "dark";
+  });
+  const [systemTheme, setSystemTheme] = useState<"dark" | "light">(() => {
+    if (typeof window === "undefined") {
+      return "dark";
+    }
+
+    return getSystemTheme();
+  });
+
+  const resolvedTheme = themeMode === "system" ? systemTheme : themeMode;
 
   useEffect(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
@@ -38,12 +77,60 @@ export default function App() {
     return () => clearInterval(t);
   }, []);
 
+  useEffect(() => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+  }, [themeMode]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleChange = () => setSystemTheme(media.matches ? "dark" : "light");
+
+    handleChange();
+    media.addEventListener("change", handleChange);
+
+    return () => media.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    root.classList.remove("dark", "light");
+    root.classList.add(resolvedTheme);
+    root.style.colorScheme = resolvedTheme;
+  }, [resolvedTheme]);
+
+  const renderThemeButton = (mode: ThemeMode, sizeClass = "h-10 w-10") => {
+    const control = THEME_CONTROLS.find((item) => item.mode === mode);
+
+    if (!control) {
+      return null;
+    }
+
+    const Icon = control.icon;
+    const active = themeMode === mode;
+
+    return (
+      <button
+        key={mode}
+        type="button"
+        onClick={() => setThemeMode(mode)}
+        aria-label={control.label}
+        aria-pressed={active}
+        title={control.label}
+        className={`${sizeClass} inline-flex items-center justify-center border transition-all ${active ? "border-primary bg-primary text-primary-foreground shadow-[0_0_16px_rgba(0,212,255,0.18)]" : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"}`}
+      >
+        <Icon size={14} />
+      </button>
+    );
+  };
+
  
 
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden flex flex-col gap-[30px]" style={ EXO }>
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden flex flex-col gap-[30px]" style={EXO}>
       <GridBg />
 
       {/* Subtle scanline */}
@@ -58,21 +145,25 @@ export default function App() {
 
       <Ticker />
 
+      {/*
+      <LineChart data={[3, 9, 1, 5, 2]} />
+      */}
+
       {/* ── Nav ── */}
       <nav ref={navRef} className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-0 flex flex-col gap-3 md:block">
           <div className="flex items-center justify-between gap-4 md:hidden">
-            <div className="flex items-center gap-3 flex-shrink-0 min-w-0">
+            <div id="#" className="flex items-center gap-3 flex-shrink-0 min-w-0">
               <div
                 className="relative w-8 h-8 flex items-center justify-center border border-primary/40"
-                style={{ boxShadow: "0 0 12px rgba(0,212,255,0.2)" }}
+                style={{ boxShadow: "0 0 12px color-mix(in srgb, var(--primary) 20%, transparent)" }}
               >
                 <Cpu size={16} className="text-primary" />
               </div>
               <div>
                 <div
                   className="text-sm font-bold tracking-widest uppercase leading-none hud-text"
-                  style={{ ...ORBITRON, color: "#00d4ff" }}
+                  style={{ ...ORBITRON, color: "var(--primary)" }}
                 >
                   { ABOUT_MY.item.short.toUpperCase() }
                 </div>
@@ -114,6 +205,12 @@ export default function App() {
             </div>
           </div>
 
+          <div className="flex md:hidden items-center justify-center gap-2 pb-1">
+            {renderThemeButton("system", "h-9 w-9")}
+            {renderThemeButton("dark", "h-9 w-9")}
+            {renderThemeButton("light", "h-9 w-9")}
+          </div>
+
           <div className="hidden md:flex items-center justify-between gap-8 h-14">
             <div className="flex items-center gap-3 flex-shrink-0">
               <div
@@ -140,7 +237,7 @@ export default function App() {
                 <li key={link.id}>
                   <a
                     href={`#${link.id.toLowerCase()}`}
-                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group text-white"
+                    className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors relative group"
                     style={MONO}
                   >
                     {link.label}
@@ -151,6 +248,11 @@ export default function App() {
             </ul>
 
             <div className="flex items-center gap-4 flex-shrink-0">
+              <div className="flex items-center gap-1 rounded-none border border-border bg-background/80 p-1">
+                {renderThemeButton("system")}
+                {renderThemeButton("dark")}
+                {renderThemeButton("light")}
+              </div>
               <div className="hidden sm:flex items-center gap-2">
                 <PulsingDot />
                 <span className="text-xs text-primary tabular-nums" style={MONO}>
@@ -265,7 +367,7 @@ export default function App() {
                 href="https://github.com/echeverriaalex"
                 target="_blank"
                 rel="noreferrer"
-                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
               >
                 <Github size={20} />
               </a>
@@ -273,7 +375,7 @@ export default function App() {
                 href="https://www.linkedin.com/in/alexnahuelecheverria/"
                 target="_blank"
                 rel="noreferrer"
-                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors text-white"
+                className="border border-border p-3 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
               >
                 <Linkedin size={20} />
               </a>
@@ -308,7 +410,7 @@ export default function App() {
                       className="flex justify-between text-[15px] mb-1"
                       style={MONO}
                     >
-                      <span className="text-secondary-foreground text-white">
+                      <span className="text-secondary-foreground">
                         {bar.label}
                       </span>
                       <span style={{ color: bar.color }}>
@@ -549,7 +651,7 @@ export default function App() {
               className="text-4xl md:text-5xl font-black leading-none uppercase mb-4"
               style={{
                 ...ORBITRON,
-                textShadow: "0 0 20px rgba(0,212,255,0.3)",
+                textShadow: "0 0 20px color-mix(in srgb, var(--primary) 30%, transparent)",
               }}
             >
               <span className="text-foreground">Hablemos</span>
@@ -585,14 +687,14 @@ export default function App() {
                   target="_blank"
                   rel="noreferrer"
                   className="group relative flex items-center gap-4 p-4 border border-border bg-card hover:bg-card/80 transition-all card-hover animated-border"
-                  style={{ borderColor: "rgba(0,212,255,0.15)", animationDelay: `${idx * 0.1}s` }}
+                  style={{ borderColor: "color-mix(in srgb, var(--primary) 15%, transparent)", animationDelay: `${idx * 0.1}s` }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.borderColor =
                       color + "55")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.borderColor =
-                      "rgba(0,212,255,0.15)")
+                      "color-mix(in srgb, var(--primary) 15%, transparent)")
                   }
                 >
                   <div
@@ -629,33 +731,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-border animated-border">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-3 min-h-40 animate-fade-in-up" style={{ animationDelay: '0.3s', opacity: 0 }} >
-          <div className="flex items-center gap-3">
-            <Cpu size={13} className="text-primary" />
-            <span
-              className="text-xs text-muted-foreground tracking-widest uppercase"
-              style={MONO}
-            >
-              { ABOUT_MY.item.long } · { ABOUT_MY.item.role } · MAR DEL PLATA-0223 · { new Date().getFullYear() }
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <PulsingDot />
-            <span className="text-xs text-primary" style={MONO}>
-              TODOS LOS SISTEMAS NOMINALES
-            </span>
-          </div>
-        </div>
-        <div
-          className="h-0.5 w-full"
-          style={{
-            background:
-              "linear-gradient(to right, transparent, #00d4ff, #7b61ff, transparent)",
-          }}
-        />
-      </footer>
+      <Footer />
     </div>
   );
 }
